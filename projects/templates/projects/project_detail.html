@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-4">Project Details</h1>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <p class="mb-2"><span class="font-semibold">Name:</span> {{ project.name }}</p>
+        <p class="mb-2"><span class="font-semibold">Description:</span> {{ project.description }}</p>
+        <p class="mb-2"><span class="font-semibold">Start Date:</span> {{ project.start_date }}</p>
+        {% if project.end_date %}
+            <p class="mb-2"><span class="font-semibold">End Date:</span> {{ project.end_date }}</p>
+        {% endif %}
+        <p class="mb-2"><span class="font-semibold">Status:</span> {{ project.status }}</p>
+        <p class="mb-2"><span class="font-semibold">Contractor:</span> <a href="{% url 'contractor-detail' project.contractor.pk %}">{{ project.contractor.name }}</a></p>  </p>
+
+        {% comment %}  Example: Displaying related orders (if you have that relationship)
+        {% if orders %}
+            <h2 class="text-2xl font-semibold mt-4 mb-2">Orders</h2>
+            <ul>
+                {% for order in orders %}
+                    <li><a href="{% url 'order_detail' order.pk %}">Order #{{ order.id }}</a></li>  {% endfor %}
+            </ul>
+        {% endif %}
+        {% endcomment %}
+
+    </div>
+</div>
+{% endblock %}

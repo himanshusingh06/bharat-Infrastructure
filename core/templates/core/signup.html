@@ -1,0 +1,102 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Register - Bharat Infrastructure{% endblock %}
+
+{% block extra_head %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    .floating-label {
+        position: absolute;
+        left: 12px;
+        top: 14px;
+        transition: all 0.3s ease-in-out;
+        color: #9ca3af;
+        pointer-events: none;
+        font-size: 16px;
+    }
+
+    .input:focus + .floating-label,
+    .input:not(:placeholder-shown) + .floating-label {
+        top: -10px;
+        left: 10px;
+        font-size: 12px;
+        color: #3b82f6;
+        background: white;
+        padding: 0 5px;
+    }
+
+    .input {
+        padding: 14px 12px 4px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        width: 100%;
+        outline: none;
+        font-size: 16px;
+        transition: border 0.3s ease-in-out;
+    }
+
+    .input:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="bg-gray-100 flex justify-center items-center h-screen">
+    <div class="bg-white shadow-xl p-8 rounded-lg max-w-md w-full">
+        <h2 class="text-center text-2xl font-semibold text-gray-700 mb-4">Register</h2>
+
+        <!-- Messages -->
+        {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+            <div class="p-3 rounded-md text-white text-sm font-medium 
+                {% if message.tags == 'success' %} bg-green-500 {% else %} bg-red-500 {% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form action="{% url 'register' %}" method="POST" class="space-y-5">
+            {% csrf_token %}
+
+            <div class="relative">
+                <input type="text" name="f_name" class="input peer" placeholder=" " required>
+                <label class="floating-label">First Name</label>
+            </div>
+
+            <div class="relative">
+                <input type="text" name="l_name" class="input peer" placeholder=" " required>
+                <label class="floating-label">Last Name</label>
+            </div>
+
+            <div class="relative">
+                <input type="text" name="username" class="input peer" placeholder=" " required>
+                <label class="floating-label">Username</label>
+            </div>
+
+            <div class="relative">
+                <input type="email" name="email" class="input peer" placeholder=" " required>
+                <label class="floating-label">Email</label>
+            </div>
+
+            <div class="relative">
+                <input type="password" name="password1" class="input peer" placeholder=" " required>
+                <label class="floating-label">Password</label>
+            </div>
+
+            <div class="relative">
+                <input type="password" name="password2" class="input peer" placeholder=" " required>
+                <label class="floating-label">Confirm Password</label>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition-all transform hover:scale-105">
+                Register
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

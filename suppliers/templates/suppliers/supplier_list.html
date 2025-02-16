@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Suppliers List - Bharat Infrastructure{% endblock %}
+
+
+
+{% block content %}
+<!-- Contractors List Section -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-semibold mb-8 text-center">Our Trusted suppliers</h2>
+        
+        <!-- Table of Contractors -->
+        <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+            <table class="min-w-full table-auto">
+                <thead class="bg-blue-600 text-white">
+                    <tr>
+                        <th class="px-6 py-3 text-left">Business Name</th>
+                        <th class="px-6 py-3 text-left">Contact Person</th>
+                        <th class="px-6 py-3 text-left">Phone</th>
+                        <th class="px-6 py-3 text-left">Email</th>
+                        <th class="px-6 py-3 text-left">Address</th>
+                        <th class="px-6 py-3 text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in suppliers %}
+                    <tr class="border-b">
+                        <td class="px-6 py-4">{{ s.business_name}}</td>
+                        <td class="px-6 py-4">{{ s.contact_person }}</td>
+                        <td class="px-6 py-4">{{ s.Phone }}</td>
+                        <td class="px-6 py-4">{{ s.email }}</td>
+                        <td class="px-6 py-4">{{ s.address }}</td>
+                        <td class="px-6 py-4 text-blue-600 hover:text-blue-800">
+                            <a href="{% url 'suppliers-detail' s.id %}" class="hover:underline">View Details</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">No suppliers available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination (if applicable) -->
+        <div class="mt-6">
+            {% if suppliers.has_other_pages %}
+            <div class="flex justify-center space-x-4">
+                {% if suppliers.has_previous %}
+                <a href="?page=1" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">First</a>
+                <a href="?page={{ contractors.previous_page_number }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Previous</a>
+                {% endif %}
+                <span class="px-4 py-2 text-lg font-semibold">
+                    Page {{ suppliers.number }} of {{ suppliers.paginator.num_pages }}
+                </span>
+                {% if suppliers.has_next %}
+                <a href="?page={{ contractors.next_page_number }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Next</a>
+                <a href="?page={{ contractors.paginator.num_pages }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Last</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {% endblock content %}

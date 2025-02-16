@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bharat Infrastructure{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    {% block extra_head %}
+    {% endblock %}
+</head>
+
+<body class="bg-gray-100 text-gray-900">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="/">
+                <img src="{% static 'logofull.png' %}" alt="Bharat Infrastructure" class="h-12 w-auto">
+            </a>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-toggle" class="lg:hidden focus:outline-none">
+                <svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+
+            <!-- Navigation Links -->
+            <nav class="hidden lg:flex space-x-6">
+                <ul class="flex space-x-6 text-blue-600 font-medium">
+                    
+                    <li><a href="{% url 'contractor-list' %}" class="hover:underline">Contractors</a></li>
+                    <li><a href="{% url 'supplier-list' %}" class="hover:underline">Suppliers</a></li>
+                    <li><a href="{% url 'project-list' %}" class="hover:underline">Projects</a></li>
+                    <li><a href="{% url 'material-list' %}" class="hover:underline">Materials</a></li>
+                    <li><a href="{% url 'order-list' %}" class="hover:underline">Orders</a></li>
+                    <li><a href="{% url 'payment-list' %}" class="hover:underline">Payments</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}" class="hover:underline">Logout</a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}" class="hover:underline">Login</a></li>
+                    <li><a href="{% url 'register' %}" class="hover:underline">Sign-Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Mobile Navigation (Hidden by default) -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-300">
+            <ul class="py-4 text-center text-blue-600 font-medium space-y-4">
+                
+                <li><a href="{% url 'contractor-list' %}" class="block hover:underline">Contractors</a></li>
+                <li><a href="{% url 'supplier-list' %}" class="block hover:underline">Suppliers</a></li>
+                <li><a href="{% url 'project-list' %}" class="block hover:underline">Projects</a></li>
+                <li><a href="{% url 'material-list' %}" class="block hover:underline">Materials</a></li>
+                <li><a href="{% url 'order-list' %}" class="block hover:underline">Orders</a></li>
+                <li><a href="{% url 'payment-list' %}" class="block hover:underline">Payments</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}" class="hover:underline">Logout</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}" class="block hover:underline">Login</a></li>
+                <li><a href="{% url 'register' %}" class="block hover:underline">Sign-Up</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        document.getElementById("menu-toggle").addEventListener("click", function () {
+            document.getElementById("mobile-menu").classList.toggle("hidden");
+        });
+    </script>
+
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-7xl mx-auto px-4">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white text-center py-6 mt-10">
+        <p>&copy; 2025 Bharat Infrastructure. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

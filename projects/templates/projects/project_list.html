@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+
+{% block title %}projects List - Bharat Infrastructure{% endblock %}
+
+{% block content %}
+<!-- projects List Section -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-semibold mb-8 text-center">Our Trusted projects</h2>
+        
+        <!-- Table of projects -->
+        <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+            <table class="min-w-full table-auto">
+                <thead class="bg-blue-600 text-white">
+                    <tr>
+                        <th class="px-6 py-3 text-left">Name</th>
+                        <th class="px-6 py-3 text-left">description</th>
+                        <th class="px-6 py-3 text-left">start_date</th>
+                        <th class="px-6 py-3 text-left">end_date</th>
+                        <th class="px-6 py-3 text-left">status</th>
+                        <th class="px-6 py-3 text-left">contractor</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in projects %}
+                    <tr class="border-b">
+                        <td class="px-6 py-4">{{ project.name }}</td>
+                        <td class="px-6 py-4">{{ project.description }}</td>
+                        <td class="px-6 py-4">{{ project.start_date }}</td>
+                        <td class="px-6 py-4">{{ project.end_date }}</td>
+                        <td class="px-6 py-4">{{ project.status }}</td>
+                        <td class="px-6 py-4">{{ project.contractor }}</td>
+                        <td class="px-6 py-4 text-blue-600 hover:text-blue-800">
+                            <a href="{% url 'project-detail' project.id %}" class="hover:underline">View Details</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">No projects available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination (if applicable) -->
+        <div class="mt-6">
+            {% if projects.has_other_pages %}
+            <div class="flex justify-center space-x-4">
+                {% if projects.has_previous %}
+                <a href="?page=1" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">First</a>
+                <a href="?page={{ projects.previous_page_number }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Previous</a>
+                {% endif %}
+                <span class="px-4 py-2 text-lg font-semibold">
+                    Page {{ projects.number }} of {{ projects.paginator.num_pages }}
+                </span>
+                {% if projects.has_next %}
+                <a href="?page={{ projects.next_page_number }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Next</a>
+                <a href="?page={{ projects.paginator.num_pages }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Last</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {% endblock content %}
